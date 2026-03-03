@@ -1,0 +1,60 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import type { Photo } from "@/types";
+import PhotoLightbox from "./PhotoLightbox";
+
+interface PhotoGridProps {
+  photos: Photo[];
+}
+
+export default function PhotoGrid({ photos }: PhotoGridProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  if (!photos.length) {
+    return (
+      <p className="text-center text-gray-500 py-20">
+        Chưa có ảnh nào trong album này.
+      </p>
+    );
+  }
+
+  return (
+    <>
+      <div className="columns-2 md:columns-3 gap-4 space-y-4">
+        {photos.map((photo, i) => (
+          <div
+            key={photo.id}
+            className="break-inside-avoid cursor-pointer group"
+            onClick={() => setLightboxIndex(i)}
+          >
+            <div className="relative overflow-hidden rounded-xl">
+              <Image
+                src={photo.src}
+                alt={photo.alt || photo.caption || "Ảnh"}
+                width={photo.width || 600}
+                height={photo.height || 400}
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+            </div>
+            {photo.caption && (
+              <p className="mt-2 text-xs text-gray-500 px-1">{photo.caption}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {lightboxIndex !== null && (
+        <PhotoLightbox
+          photos={photos}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onChangeIndex={setLightboxIndex}
+        />
+      )}
+    </>
+  );
+}
