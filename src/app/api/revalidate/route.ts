@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const secret = req.headers.get("x-revalidate-secret");
-  if (secret !== "ourlove-revalidate") {
+  const expectedSecret = process.env.REVALIDATE_SECRET;
+  if (!expectedSecret || secret !== expectedSecret) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 

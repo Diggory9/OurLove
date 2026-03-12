@@ -37,7 +37,6 @@ const loveLetterSchema = new Schema<ILoveLetter>(
   }
 );
 
-loveLetterSchema.index({ slug: 1 });
 loveLetterSchema.index({ scheduledAt: 1 });
 loveLetterSchema.index({ order: 1 });
 

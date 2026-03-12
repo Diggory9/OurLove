@@ -33,7 +33,6 @@ const albumSchema = new Schema<IAlbum>(
   }
 );
 
-albumSchema.index({ slug: 1 });
 albumSchema.index({ order: 1 });
 
 export const Album = mongoose.model<IAlbum>("Album", albumSchema);

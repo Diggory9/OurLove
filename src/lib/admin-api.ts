@@ -21,7 +21,7 @@ async function revalidateFrontend() {
   try {
     await fetch("/api/revalidate", {
       method: "POST",
-      headers: { "x-revalidate-secret": "ourlove-revalidate" },
+      headers: { "x-revalidate-secret": process.env.NEXT_PUBLIC_REVALIDATE_SECRET || "ourlove-revalidate" },
     });
   } catch {
     // Ignore revalidation errors

@@ -37,7 +37,6 @@ const timelineEventSchema = new Schema<ITimelineEvent>(
   }
 );
 
-timelineEventSchema.index({ slug: 1 });
 timelineEventSchema.index({ date: -1 });
 
 export const TimelineEvent = mongoose.model<ITimelineEvent>(
