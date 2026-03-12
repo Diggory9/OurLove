@@ -21,11 +21,9 @@ export function errorHandler(
 ): void {
   const statusCode = err instanceof AppError ? err.statusCode : 500;
   const message =
-    err instanceof AppError ? err.message : "Lỗi máy chủ nội bộ";
+    err instanceof AppError ? err.message : err.message || "Lỗi máy chủ nội bộ";
 
-  if (env.nodeEnv === "development") {
-    console.error("Error:", err);
-  }
+  console.error("Error:", err);
 
   res.status(statusCode).json({
     success: false,
