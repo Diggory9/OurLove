@@ -4,13 +4,25 @@ import { AppError } from "../middleware/errorHandler";
 import slugify from "../utils/slugify";
 
 export async function getAllTimelineEvents(
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const events = await TimelineEvent.find().sort({ date: -1 });
-    res.json({ success: true, data: events });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
+    const skip = (page - 1) * limit;
+
+    const [events, total] = await Promise.all([
+      TimelineEvent.find().sort({ date: -1 }).skip(skip).limit(limit),
+      TimelineEvent.countDocuments(),
+    ]);
+
+    res.json({
+      success: true,
+      data: events,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
   } catch (err) {
     next(err);
   }

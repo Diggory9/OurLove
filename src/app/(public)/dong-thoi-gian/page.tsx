@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import { getAllTimelineEvents } from "@/lib/data";
+import { getAllTimelineEvents, getSiteConfig } from "@/lib/data";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/shared/SectionHeading";
 import TimelineLine from "@/components/timeline/TimelineLine";
 
-export const metadata: Metadata = {
-  title: "Dòng thời gian",
-  description: "Những mốc quan trọng trong tình yêu của chúng mình",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteConfig();
+  return {
+    title: "Dòng thời gian",
+    description: `Những mốc quan trọng trong tình yêu của ${site.person1Name} & ${site.person2Name}`,
+    openGraph: {
+      title: `Dòng thời gian | ${site.siteName}`,
+      description: `Những mốc quan trọng trong tình yêu của ${site.person1Name} & ${site.person2Name}`,
+      locale: "vi_VN",
+    },
+  };
+}
 
 export default async function TimelinePage() {
   const events = await getAllTimelineEvents();

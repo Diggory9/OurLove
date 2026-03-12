@@ -9,6 +9,9 @@ const navItems = [
   { href: "/admin/albums", label: "Albums", icon: "&#128247;" },
   { href: "/admin/photos", label: "Photos", icon: "&#127748;" },
   { href: "/admin/timeline", label: "Timeline", icon: "&#128197;" },
+  { href: "/admin/love-letters", label: "Lời nhắn", icon: "&#128140;" },
+  { href: "/admin/bucket-list", label: "Kế hoạch", icon: "&#128203;" },
+  { href: "/admin/special-days", label: "Ngày đặc biệt", icon: "&#127881;" },
   { href: "/admin/music", label: "Music", icon: "&#127925;" },
   { href: "/admin/settings", label: "Settings", icon: "&#9881;" },
 ];

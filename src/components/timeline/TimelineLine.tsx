@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { TimelineEvent } from "@/types";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import { formatDateLong } from "@/lib/utils";
@@ -80,7 +81,10 @@ export default function TimelineLine({ events }: TimelineLineProps) {
                       isLeft ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
                     }`}
                   >
-                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-primary-100">
+                    <Link
+                      href={`/dong-thoi-gian/${event.slug}`}
+                      className="block bg-white rounded-2xl p-6 shadow-sm border border-primary-100 hover:shadow-md hover:border-primary-200 transition-all"
+                    >
                       <div className="flex items-center gap-2 mb-2">
                         {event.icon && (
                           <span className="text-lg">{event.icon}</span>
@@ -93,7 +97,7 @@ export default function TimelineLine({ events }: TimelineLineProps) {
                         {event.title}
                       </h3>
                       {event.description && (
-                        <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+                        <p className="mt-2 text-sm text-gray-500 leading-relaxed line-clamp-3">
                           {event.description}
                         </p>
                       )}
@@ -108,7 +112,10 @@ export default function TimelineLine({ events }: TimelineLineProps) {
                           />
                         </div>
                       )}
-                    </div>
+                      <p className="mt-3 text-xs text-primary-500 font-medium">
+                        Xem chi tiết &rarr;
+                      </p>
+                    </Link>
                   </div>
                 </div>
               </AnimatedSection>

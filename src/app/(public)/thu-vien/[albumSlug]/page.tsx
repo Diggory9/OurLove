@@ -12,7 +12,16 @@ export async function generateMetadata({ params }: AlbumDetailPageProps) {
   const { albumSlug } = await params;
   const album = await getAlbumBySlug(albumSlug);
   if (!album) return { title: "Album không tìm thấy" };
-  return { title: album.title, description: album.description };
+  return {
+    title: album.title,
+    description: album.description || `Album ảnh ${album.title}`,
+    openGraph: {
+      title: album.title,
+      description: album.description || `Album ảnh ${album.title}`,
+      images: album.coverImage ? [{ url: album.coverImage }] : undefined,
+      locale: "vi_VN",
+    },
+  };
 }
 
 export default async function AlbumDetailPage({ params }: AlbumDetailPageProps) {

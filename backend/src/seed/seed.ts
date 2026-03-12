@@ -9,13 +9,17 @@ async function seed() {
   // Seed admin
   const existingAdmin = await User.findOne({ username: "admin" });
   if (!existingAdmin) {
+    const defaultPassword = process.env.ADMIN_PASSWORD || "admin123456";
     await User.create({
       username: "admin",
       email: "admin@ourlove.com",
-      password: "admin123456",
+      password: defaultPassword,
       role: "admin",
     });
     console.log("Admin user created");
+    if (defaultPassword === "admin123456") {
+      console.warn("⚠️  WARNING: Using default password. Set ADMIN_PASSWORD env variable for production!");
+    }
   } else {
     console.log("Admin user already exists");
   }
@@ -27,7 +31,7 @@ async function seed() {
       siteName: "Our Love",
       person1Name: "Anh",
       person2Name: "Em",
-      startDate: new Date("2024-01-01"),
+      startDate: new Date("2025-04-13"),
       heroMessage: "Mỗi khoảnh khắc bên nhau đều là kỷ niệm đẹp nhất...",
       footerMessage: "Made with love",
       primaryColor: "#f43f5e",

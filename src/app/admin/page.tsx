@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchAlbums, fetchPhotos, fetchTimelineEvents, fetchMusic } from "@/lib/admin-api";
+import { fetchAlbums, fetchPhotos, fetchTimelineEvents, fetchMusic, fetchLoveLetters, fetchBucketItems, fetchSpecialDays } from "@/lib/admin-api";
 import Link from "next/link";
 
 interface Stats {
@@ -9,26 +9,35 @@ interface Stats {
   photos: number;
   events: number;
   music: number;
+  letters: number;
+  bucketItems: number;
+  specialDays: number;
 }
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats>({ albums: 0, photos: 0, events: 0, music: 0 });
+  const [stats, setStats] = useState<Stats>({ albums: 0, photos: 0, events: 0, music: 0, letters: 0, bucketItems: 0, specialDays: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const [albums, photos, events, music] = await Promise.all([
+        const [albums, photos, events, music, letters, bucketItems, specialDays] = await Promise.all([
           fetchAlbums(),
           fetchPhotos(),
           fetchTimelineEvents(),
           fetchMusic(),
+          fetchLoveLetters().catch(() => []),
+          fetchBucketItems().catch(() => []),
+          fetchSpecialDays().catch(() => []),
         ]);
         setStats({
           albums: (albums as unknown[]).length,
           photos: (photos as unknown[]).length,
           events: (events as unknown[]).length,
           music: (music as unknown[]).length,
+          letters: (letters as unknown[]).length,
+          bucketItems: (bucketItems as unknown[]).length,
+          specialDays: (specialDays as unknown[]).length,
         });
       } catch {
         // Ignore errors
@@ -43,6 +52,9 @@ export default function AdminDashboard() {
     { label: "Albums", value: stats.albums, href: "/admin/albums", color: "bg-pink-500" },
     { label: "Photos", value: stats.photos, href: "/admin/photos", color: "bg-rose-500" },
     { label: "Timeline", value: stats.events, href: "/admin/timeline", color: "bg-red-500" },
+    { label: "Lời nhắn", value: stats.letters, href: "/admin/love-letters", color: "bg-purple-500" },
+    { label: "Kế hoạch", value: stats.bucketItems, href: "/admin/bucket-list", color: "bg-blue-500" },
+    { label: "Ngày đặc biệt", value: stats.specialDays, href: "/admin/special-days", color: "bg-green-500" },
     { label: "Music", value: stats.music, href: "/admin/music", color: "bg-amber-500" },
   ];
 
@@ -51,8 +63,8 @@ export default function AdminDashboard() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
 
       {loading ? (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {Array.from({ length: 4 }).map((_, i) => (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 7 }).map((_, i) => (
             <div key={i} className="bg-white rounded-xl p-6 animate-pulse">
               <div className="h-4 bg-gray-200 rounded w-20 mb-3" />
               <div className="h-8 bg-gray-200 rounded w-16" />
@@ -60,7 +72,7 @@ export default function AdminDashboard() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {cards.map((card) => (
             <Link
               key={card.label}
@@ -89,6 +101,15 @@ export default function AdminDashboard() {
             </Link>
             <Link href="/admin/timeline/new" className="block text-sm text-primary-600 hover:underline">
               + Thêm sự kiện timeline
+            </Link>
+            <Link href="/admin/love-letters/new" className="block text-sm text-primary-600 hover:underline">
+              + Viết lời nhắn
+            </Link>
+            <Link href="/admin/bucket-list/new" className="block text-sm text-primary-600 hover:underline">
+              + Thêm kế hoạch
+            </Link>
+            <Link href="/admin/special-days/new" className="block text-sm text-primary-600 hover:underline">
+              + Thêm ngày đặc biệt
             </Link>
             <Link href="/admin/settings" className="block text-sm text-primary-600 hover:underline">
               Cài đặt website

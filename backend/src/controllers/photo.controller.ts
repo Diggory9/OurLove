@@ -10,13 +10,27 @@ export async function getAllPhotos(
 ) {
   try {
     const { albumId } = req.query;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
+    const skip = (page - 1) * limit;
+
     const filter: Record<string, unknown> = {};
     if (albumId) filter.albumId = albumId;
 
-    const photos = await Photo.find(filter)
-      .sort({ order: 1, createdAt: -1 })
-      .populate("albumId", "title slug");
-    res.json({ success: true, data: photos });
+    const [photos, total] = await Promise.all([
+      Photo.find(filter)
+        .sort({ order: 1, createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate("albumId", "title slug"),
+      Photo.countDocuments(filter),
+    ]);
+
+    res.json({
+      success: true,
+      data: photos,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
   } catch (err) {
     next(err);
   }

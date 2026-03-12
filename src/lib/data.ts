@@ -1,4 +1,4 @@
-import type { Album, Photo, TimelineEvent, SiteConfig, Music } from "@/types";
+import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 const REVALIDATE = 60;
@@ -63,9 +63,52 @@ export async function getLatestTimelineEvents(): Promise<TimelineEvent[]> {
   return data || [];
 }
 
+export async function getTimelineEventBySlug(slug: string): Promise<TimelineEvent | undefined> {
+  const data = await apiFetch<TimelineEvent>(`/api/timeline/${slug}`);
+  return data || undefined;
+}
+
 // --- Music ---
 
 export async function getAllMusic(): Promise<Music[]> {
   const data = await apiFetch<Music[]>("/api/music");
   return data || [];
+}
+
+// --- Love Letters ---
+
+export async function getAllLoveLetters(): Promise<LoveLetter[]> {
+  const data = await apiFetch<LoveLetter[]>("/api/love-letters");
+  return data || [];
+}
+
+export async function getLoveLetterBySlug(slug: string): Promise<LoveLetter | undefined> {
+  const data = await apiFetch<LoveLetter>(`/api/love-letters/${slug}`);
+  return data || undefined;
+}
+
+// --- Bucket List ---
+
+export async function getAllBucketItems(): Promise<BucketItem[]> {
+  const data = await apiFetch<BucketItem[]>("/api/bucket-list");
+  return data || [];
+}
+
+// --- Special Days ---
+
+export async function getAllSpecialDays(): Promise<SpecialDay[]> {
+  const data = await apiFetch<SpecialDay[]>("/api/special-days");
+  return data || [];
+}
+
+export async function getUpcomingSpecialDays(): Promise<SpecialDay[]> {
+  const data = await apiFetch<SpecialDay[]>("/api/special-days/upcoming");
+  return data || [];
+}
+
+// --- Search ---
+
+export async function searchContent(query: string): Promise<SearchResult | null> {
+  const data = await apiFetch<SearchResult>(`/api/search?q=${encodeURIComponent(query)}`);
+  return data || null;
 }

@@ -65,3 +65,58 @@ export interface Music {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface LoveLetter {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  author: string;
+  recipient: string;
+  scheduledAt: string | null;
+  isVisible: boolean;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BucketItem {
+  id: string;
+  title: string;
+  description: string;
+  completed: boolean;
+  completedDate: string | null;
+  completedImage: string;
+  category: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SpecialDay {
+  id: string;
+  title: string;
+  date: string;
+  type: "birthday" | "anniversary" | "valentine" | "custom";
+  recurring: boolean;
+  description: string;
+  icon: string;
+  notifyBefore: number;
+  nextOccurrence?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SearchResult {
+  albums: Album[];
+  photos: Photo[];
+  events: TimelineEvent[];
+  total: number;
+}
+
+export interface PaginationInfo {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+}

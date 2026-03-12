@@ -5,10 +5,19 @@ import Container from "@/components/ui/Container";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import LoveDayCounter from "@/components/home/LoveDayCounter";
 
-export const metadata: Metadata = {
-  title: "Về chúng tôi",
-  description: "Câu chuyện tình yêu của chúng mình",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteConfig();
+  return {
+    title: "Về chúng tôi",
+    description: `Câu chuyện tình yêu của ${site.person1Name} & ${site.person2Name}`,
+    openGraph: {
+      title: `Về chúng tôi | ${site.siteName}`,
+      description: `Câu chuyện tình yêu của ${site.person1Name} & ${site.person2Name}`,
+      images: site.couplePhoto ? [{ url: site.couplePhoto }] : undefined,
+      locale: "vi_VN",
+    },
+  };
+}
 
 export default async function AboutPage() {
   const site = await getSiteConfig();

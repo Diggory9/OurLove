@@ -8,6 +8,9 @@ const navItems = [
   { href: "/", label: "Trang chủ" },
   { href: "/thu-vien", label: "Thư viện ảnh" },
   { href: "/dong-thoi-gian", label: "Dòng thời gian" },
+  { href: "/loi-nhan", label: "Lời nhắn" },
+  { href: "/ke-hoach", label: "Kế hoạch" },
+  { href: "/ngay-dac-biet", label: "Ngày đặc biệt" },
   { href: "/ve-chung-toi", label: "Về chúng tôi" },
 ];
 
@@ -26,7 +29,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -36,6 +39,15 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/tim-kiem"
+              className="text-gray-400 hover:text-primary-600 transition-colors"
+              title="Tìm kiếm"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </Link>
           </nav>
 
           {/* Mobile menu button */}

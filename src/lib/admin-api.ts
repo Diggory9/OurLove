@@ -215,6 +215,140 @@ export async function deleteMusicTrack(id: string) {
   return result;
 }
 
+// --- Love Letters ---
+
+export async function fetchLoveLetters() {
+  const res = await fetch(`${API_URL}/api/love-letters/admin`, {
+    headers: authHeaders(),
+  });
+  return handleResponse<unknown[]>(res);
+}
+
+export async function fetchLoveLetter(slug: string) {
+  const res = await fetch(`${API_URL}/api/love-letters/${slug}`);
+  return handleResponse(res);
+}
+
+export async function createLoveLetter(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/love-letters`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateLoveLetter(slug: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/love-letters/${slug}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteLoveLetter(slug: string) {
+  const res = await fetch(`${API_URL}/api/love-letters/${slug}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+// --- Bucket List ---
+
+export async function fetchBucketItems() {
+  const res = await fetch(`${API_URL}/api/bucket-list`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function createBucketItem(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/bucket-list`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateBucketItem(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/bucket-list/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function toggleBucketItem(id: string) {
+  const res = await fetch(`${API_URL}/api/bucket-list/${id}/toggle`, {
+    method: "PATCH",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteBucketItem(id: string) {
+  const res = await fetch(`${API_URL}/api/bucket-list/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+// --- Special Days ---
+
+export async function fetchSpecialDays() {
+  const res = await fetch(`${API_URL}/api/special-days`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function createSpecialDay(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/special-days`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateSpecialDay(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/special-days/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteSpecialDay(id: string) {
+  const res = await fetch(`${API_URL}/api/special-days/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
 // --- Upload ---
 
 export async function uploadImage(file: File): Promise<{ url: string }> {

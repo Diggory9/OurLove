@@ -10,9 +10,10 @@ interface LoveDayCounterProps {
 }
 
 export default function LoveDayCounter({ startDate, person1, person2 }: LoveDayCounterProps) {
-  const [time, setTime] = useState(calculateDaysTogether(startDate));
+  const [time, setTime] = useState<ReturnType<typeof calculateDaysTogether> | null>(null);
 
   useEffect(() => {
+    setTime(calculateDaysTogether(startDate));
     const interval = setInterval(() => {
       setTime(calculateDaysTogether(startDate));
     }, 1000);
@@ -20,10 +21,10 @@ export default function LoveDayCounter({ startDate, person1, person2 }: LoveDayC
   }, [startDate]);
 
   const blocks = [
-    { value: time.days, label: "Ngày" },
-    { value: time.hours, label: "Giờ" },
-    { value: time.minutes, label: "Phút" },
-    { value: time.seconds, label: "Giây" },
+    { value: time?.days ?? 0, label: "Ngày" },
+    { value: time?.hours ?? 0, label: "Giờ" },
+    { value: time?.minutes ?? 0, label: "Phút" },
+    { value: time?.seconds ?? 0, label: "Giây" },
   ];
 
   return (
