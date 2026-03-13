@@ -349,6 +349,50 @@ export async function deleteSpecialDay(id: string) {
   return result;
 }
 
+// --- Places ---
+
+export async function fetchPlaces() {
+  const res = await fetch(`${API_URL}/api/places`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function fetchPlace(id: string) {
+  const res = await fetch(`${API_URL}/api/places/${id}`);
+  return handleResponse(res);
+}
+
+export async function createPlace(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/places`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updatePlace(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/places/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deletePlace(id: string) {
+  const res = await fetch(`${API_URL}/api/places/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
 // --- Upload ---
 
 export async function uploadImage(file: File): Promise<{ url: string }> {

@@ -9,12 +9,13 @@ interface AnniversaryCountdownProps {
 
 export default function AnniversaryCountdown({ startDate }: AnniversaryCountdownProps) {
   const nextAnniversary = getNextAnniversary(startDate);
-  const [countdown, setCountdown] = useState(calculateCountdown(nextAnniversary));
+  const [countdown, setCountdown] = useState<ReturnType<typeof calculateCountdown> | null>(null);
 
   const start = new Date(startDate);
   const yearsNext = nextAnniversary.getFullYear() - start.getFullYear();
 
   useEffect(() => {
+    setCountdown(calculateCountdown(nextAnniversary));
     const interval = setInterval(() => {
       setCountdown(calculateCountdown(nextAnniversary));
     }, 1000);
@@ -22,10 +23,10 @@ export default function AnniversaryCountdown({ startDate }: AnniversaryCountdown
   }, [nextAnniversary]);
 
   const blocks = [
-    { value: countdown.days, label: "Ngày" },
-    { value: countdown.hours, label: "Giờ" },
-    { value: countdown.minutes, label: "Phút" },
-    { value: countdown.seconds, label: "Giây" },
+    { value: countdown?.days ?? 0, label: "Ngày" },
+    { value: countdown?.hours ?? 0, label: "Giờ" },
+    { value: countdown?.minutes ?? 0, label: "Phút" },
+    { value: countdown?.seconds ?? 0, label: "Giây" },
   ];
 
   return (

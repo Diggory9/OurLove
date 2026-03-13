@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { fetchSiteConfig, updateSiteConfig } from "@/lib/admin-api";
 import ImageUploader from "@/components/admin/ImageUploader";
 import type { SiteConfig } from "@/types";
+import { themePresets } from "@/lib/theme";
 
 export default function AdminSettingsPage() {
   const [config, setConfig] = useState<SiteConfig | null>(null);
@@ -103,21 +104,68 @@ export default function AdminSettingsPage() {
         {/* Theme */}
         <div>
           <h2 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Giao diện</h2>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Màu chính</label>
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={config?.primaryColor || "#f43f5e"}
-                onChange={(e) => updateField("primaryColor", e.target.value)}
-                className="w-12 h-12 rounded-lg border border-gray-200 cursor-pointer"
-              />
-              <input
-                type="text"
-                value={config?.primaryColor || ""}
-                onChange={(e) => updateField("primaryColor", e.target.value)}
-                className="w-32 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-primary-500 focus:outline-none"
-              />
+
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Chọn theme</label>
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {themePresets.map((theme) => (
+              <button
+                key={theme.name}
+                type="button"
+                onClick={() => {
+                  updateField("themeName", theme.name);
+                  updateField("primaryColor", theme.primary);
+                  updateField("accentColor", theme.accent);
+                }}
+                className={`p-3 rounded-xl border-2 transition-all text-left ${
+                  config?.themeName === theme.name
+                    ? "border-primary-500 bg-primary-50 shadow-sm"
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-5 h-5 rounded-full" style={{ background: theme.primary }} />
+                  <div className="w-5 h-5 rounded-full" style={{ background: theme.accent }} />
+                </div>
+                <p className="text-sm font-semibold text-gray-800">{theme.label}</p>
+                <p className="text-xs text-gray-500">{theme.vibe}</p>
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Màu chính</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={config?.primaryColor || "#f43f5e"}
+                  onChange={(e) => { updateField("primaryColor", e.target.value); updateField("themeName", "custom"); }}
+                  className="w-12 h-12 rounded-lg border border-gray-200 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={config?.primaryColor || ""}
+                  onChange={(e) => { updateField("primaryColor", e.target.value); updateField("themeName", "custom"); }}
+                  className="w-32 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-primary-500 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Màu phụ</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={config?.accentColor || "#f59e0b"}
+                  onChange={(e) => { updateField("accentColor", e.target.value); updateField("themeName", "custom"); }}
+                  className="w-12 h-12 rounded-lg border border-gray-200 cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={config?.accentColor || ""}
+                  onChange={(e) => { updateField("accentColor", e.target.value); updateField("themeName", "custom"); }}
+                  className="w-32 rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-primary-500 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
         </div>

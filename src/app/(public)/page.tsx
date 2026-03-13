@@ -5,6 +5,7 @@ import FeaturedPhotos from "@/components/home/FeaturedPhotos";
 import TimelinePreview from "@/components/home/TimelinePreview";
 import AnniversaryCountdown from "@/components/home/AnniversaryCountdown";
 import UpcomingDays from "@/components/home/UpcomingDays";
+import DailyQuote from "@/components/home/DailyQuote";
 
 export default async function HomePage() {
   const [site, featuredPhotos, latestEvents, upcomingDays] = await Promise.all([
@@ -22,6 +23,7 @@ export default async function HomePage() {
         person1={site.person1Name}
         person2={site.person2Name}
       />
+      <DailyQuote />
       <FeaturedPhotos photos={featuredPhotos} />
       <TimelinePreview events={latestEvents} />
       <UpcomingDays days={upcomingDays} />

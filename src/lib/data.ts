@@ -1,4 +1,4 @@
-import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult } from "@/types";
+import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult, Place } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 const REVALIDATE = 60;
@@ -103,6 +103,13 @@ export async function getAllSpecialDays(): Promise<SpecialDay[]> {
 
 export async function getUpcomingSpecialDays(): Promise<SpecialDay[]> {
   const data = await apiFetch<SpecialDay[]>("/api/special-days/upcoming");
+  return data || [];
+}
+
+// --- Places ---
+
+export async function getAllPlaces(): Promise<Place[]> {
+  const data = await apiFetch<Place[]>("/api/places");
   return data || [];
 }
 

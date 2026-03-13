@@ -13,6 +13,7 @@ const navItems = [
   { href: "/admin/bucket-list", label: "Kế hoạch", icon: "&#128203;" },
   { href: "/admin/special-days", label: "Ngày đặc biệt", icon: "&#127881;" },
   { href: "/admin/music", label: "Music", icon: "&#127925;" },
+  { href: "/admin/places", label: "Bản đồ", icon: "&#128205;" },
   { href: "/admin/settings", label: "Settings", icon: "&#9881;" },
 ];
 

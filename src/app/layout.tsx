@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Dancing_Script } from "next/font/google";
 import "./globals.css";
 import { getSiteConfig } from "@/lib/data";
+import ThemeInjector from "@/components/ThemeInjector";
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
@@ -39,14 +40,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = await getSiteConfig();
+
   return (
     <html lang="vi">
       <body className={`${beVietnamPro.variable} ${dancingScript.variable} antialiased`}>
+        <ThemeInjector
+          primaryColor={site.primaryColor || "#f43f5e"}
+          accentColor={site.accentColor || "#f59e0b"}
+        />
         {children}
       </body>
     </html>

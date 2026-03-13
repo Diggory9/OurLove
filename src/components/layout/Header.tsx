@@ -11,6 +11,7 @@ const navItems = [
   { href: "/loi-nhan", label: "Lời nhắn" },
   { href: "/ke-hoach", label: "Kế hoạch" },
   { href: "/ngay-dac-biet", label: "Ngày đặc biệt" },
+  { href: "/ban-do", label: "Bản đồ" },
   { href: "/ve-chung-toi", label: "Về chúng tôi" },
 ];
 

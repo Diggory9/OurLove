@@ -53,6 +53,8 @@ export interface SiteConfig {
   backgroundMusicTitle: string;
   autoplayMusic: boolean;
   primaryColor: string;
+  accentColor: string;
+  themeName: string;
 }
 
 export interface Music {
@@ -103,6 +105,19 @@ export interface SpecialDay {
   icon: string;
   notifyBefore: number;
   nextOccurrence?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Place {
+  id: string;
+  title: string;
+  description: string;
+  lat: number;
+  lng: number;
+  image: string;
+  date: string;
+  order: number;
   createdAt: string;
   updatedAt: string;
 }

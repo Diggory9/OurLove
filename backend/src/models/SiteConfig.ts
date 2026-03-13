@@ -12,6 +12,8 @@ export interface ISiteConfig extends Document {
   backgroundMusicTitle: string;
   autoplayMusic: boolean;
   primaryColor: string;
+  accentColor: string;
+  themeName: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -29,6 +31,8 @@ const siteConfigSchema = new Schema<ISiteConfig>(
     backgroundMusicTitle: { type: String, default: "" },
     autoplayMusic: { type: Boolean, default: false },
     primaryColor: { type: String, default: "#f43f5e" },
+    accentColor: { type: String, default: "#f59e0b" },
+    themeName: { type: String, default: "rose" },
   },
   {
     timestamps: true,

@@ -10,5 +10,7 @@
   "backgroundMusicUrl": "",
   "backgroundMusicTitle": "",
   "autoplayMusic": false,
-  "primaryColor": "#f43f5e"
+  "primaryColor": "#f43f5e",
+  "accentColor": "#f59e0b",
+  "themeName": "rose"
 }

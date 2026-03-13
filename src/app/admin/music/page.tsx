@@ -112,15 +112,27 @@ export default function AdminMusicPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">URL nhạc *</label>
-            <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="URL hoặc upload" className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-primary-500 focus:outline-none" />
+            <label className="block text-sm font-semibold text-gray-700 mb-1">File nhạc (MP3) *</label>
             <input ref={fileRef} type="file" accept="audio/*" onChange={handleUploadAudio} className="hidden" />
-            <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="mt-2 text-sm text-primary-600 hover:text-primary-700 font-medium disabled:opacity-50">
-              {uploading ? "Đang upload..." : "Upload file nhạc"}
+            <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-sm font-medium text-gray-600 hover:border-primary-400 hover:text-primary-600 transition-colors disabled:opacity-50">
+              {uploading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                  Đang upload...
+                </>
+              ) : (
+                <>&#127925; Chọn file nhạc để upload</>
+              )}
             </button>
+            {url && (
+              <div className="mt-2 flex items-center gap-2 text-sm text-green-600 bg-green-50 px-3 py-2 rounded-lg">
+                <span>&#9989;</span>
+                <span className="truncate">{url.split("/").pop()}</span>
+              </div>
+            )}
           </div>
 
-          <button onClick={handleCreate} disabled={saving} className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50">
+          <button onClick={handleCreate} disabled={saving || !url} className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 disabled:opacity-50">
             {saving ? "Đang lưu..." : "Thêm bài hát"}
           </button>
         </div>

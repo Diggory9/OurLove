@@ -19,6 +19,7 @@ import loveLetterRoutes from "./routes/loveLetter.routes";
 import bucketListRoutes from "./routes/bucketList.routes";
 import specialDayRoutes from "./routes/specialDay.routes";
 import searchRoutes from "./routes/search.routes";
+import placeRoutes from "./routes/place.routes";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/api/love-letters", loveLetterRoutes);
 app.use("/api/bucket-list", bucketListRoutes);
 app.use("/api/special-days", specialDayRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/places", placeRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {
