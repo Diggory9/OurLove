@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import type { SpecialDay } from "@/types";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import { formatDate } from "@/lib/utils";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface SpecialDaysListProps {
   days: SpecialDay[];
@@ -30,7 +31,8 @@ function calculateDaysUntil(dateStr: string): number {
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
-export default function SpecialDaysList({ days }: SpecialDaysListProps) {
+export default function SpecialDaysList({ days: initialDays }: SpecialDaysListProps) {
+  const { data: days, loading } = useClientFallback(initialDays, "/api/special-days");
   const [, setTick] = useState(0);
 
   // Update countdown every minute
@@ -38,6 +40,14 @@ export default function SpecialDaysList({ days }: SpecialDaysListProps) {
     const timer = setInterval(() => setTick((t) => t + 1), 60000);
     return () => clearInterval(timer);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!days.length) return null;
 

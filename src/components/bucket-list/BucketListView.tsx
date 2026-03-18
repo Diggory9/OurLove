@@ -5,14 +5,29 @@ import Image from "next/image";
 import type { BucketItem } from "@/types";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import { formatDate } from "@/lib/utils";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface BucketListViewProps {
   completed: BucketItem[];
   pending: BucketItem[];
 }
 
-export default function BucketListView({ completed, pending }: BucketListViewProps) {
+export default function BucketListView({ completed: initialCompleted, pending: initialPending }: BucketListViewProps) {
+  const allInitial = [...initialPending, ...initialCompleted];
+  const { data: allItems, loading } = useClientFallback(allInitial, "/api/bucket-list");
+
+  const completed = allItems.filter((item) => item.completed);
+  const pending = allItems.filter((item) => !item.completed);
+
   const [tab, setTab] = useState<"all" | "pending" | "completed">("all");
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const items =
     tab === "pending" ? pending : tab === "completed" ? completed : [...pending, ...completed];

@@ -5,12 +5,23 @@ import type { LoveLetter } from "@/types";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import Card from "@/components/ui/Card";
 import { formatDate } from "@/lib/utils";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface LoveLetterListProps {
   letters: LoveLetter[];
 }
 
-export default function LoveLetterList({ letters }: LoveLetterListProps) {
+export default function LoveLetterList({ letters: initialLetters }: LoveLetterListProps) {
+  const { data: letters, loading } = useClientFallback(initialLetters, "/api/love-letters");
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!letters.length) return null;
 
   return (

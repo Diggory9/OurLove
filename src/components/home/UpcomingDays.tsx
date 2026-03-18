@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import type { SpecialDay } from "@/types";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/shared/SectionHeading";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import { formatDate } from "@/lib/utils";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface UpcomingDaysProps {
   days: SpecialDay[];
@@ -16,7 +19,21 @@ const typeLabels: Record<string, string> = {
   custom: "Đặc biệt",
 };
 
-export default function UpcomingDays({ days }: UpcomingDaysProps) {
+export default function UpcomingDays({ days: initialDays }: UpcomingDaysProps) {
+  const { data: days, loading } = useClientFallback(initialDays, "/api/special-days/upcoming");
+
+  if (loading) {
+    return (
+      <section className="py-20">
+        <Container>
+          <div className="flex justify-center py-20">
+            <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
   if (!days.length) return null;
 
   return (

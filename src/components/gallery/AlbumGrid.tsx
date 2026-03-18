@@ -1,14 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Album } from "@/types";
 import Card from "@/components/ui/Card";
 import AnimatedSection from "@/components/shared/AnimatedSection";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface AlbumGridProps {
   albums: Album[];
 }
 
-export default function AlbumGrid({ albums }: AlbumGridProps) {
+export default function AlbumGrid({ albums: initialAlbums }: AlbumGridProps) {
+  const { data: albums, loading } = useClientFallback(initialAlbums, "/api/albums");
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!albums.length) {
     return (
       <p className="text-center text-gray-500 py-20">

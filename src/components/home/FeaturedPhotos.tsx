@@ -1,15 +1,32 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Photo } from "@/types";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/shared/SectionHeading";
 import AnimatedSection from "@/components/shared/AnimatedSection";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface FeaturedPhotosProps {
   photos: Photo[];
 }
 
-export default function FeaturedPhotos({ photos }: FeaturedPhotosProps) {
+export default function FeaturedPhotos({ photos: initialPhotos }: FeaturedPhotosProps) {
+  const { data: photos, loading } = useClientFallback(initialPhotos, "/api/photos/featured");
+
+  if (loading) {
+    return (
+      <section className="py-20">
+        <Container>
+          <div className="flex justify-center py-20">
+            <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
   if (!photos.length) return null;
 
   return (

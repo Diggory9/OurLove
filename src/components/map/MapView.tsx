@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Place } from "@/types";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 // Lazy load to avoid SSR issues with Leaflet
 let L: typeof import("leaflet") | null = null;
@@ -23,7 +24,8 @@ function formatDate(dateStr: string) {
   });
 }
 
-export default function MapView({ places }: MapViewProps) {
+export default function MapView({ places: initialPlaces }: MapViewProps) {
+  const { data: places } = useClientFallback(initialPlaces, "/api/places");
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {

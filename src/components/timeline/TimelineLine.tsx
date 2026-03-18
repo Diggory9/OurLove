@@ -6,12 +6,14 @@ import Link from "next/link";
 import type { TimelineEvent } from "@/types";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import { formatDateLong } from "@/lib/utils";
+import { useClientFallback } from "@/hooks/useClientFallback";
 
 interface TimelineLineProps {
   events: TimelineEvent[];
 }
 
-export default function TimelineLine({ events }: TimelineLineProps) {
+export default function TimelineLine({ events: initialEvents }: TimelineLineProps) {
+  const { data: events, loading } = useClientFallback(initialEvents, "/api/timeline");
   const [filterYear, setFilterYear] = useState<string>("all");
 
   const years = [...new Set(events.map((e) => new Date(e.date).getFullYear().toString()))].sort(
@@ -22,6 +24,14 @@ export default function TimelineLine({ events }: TimelineLineProps) {
     filterYear === "all"
       ? events
       : events.filter((e) => new Date(e.date).getFullYear().toString() === filterYear);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div>
