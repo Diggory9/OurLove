@@ -9,9 +9,13 @@ const fallbackSiteConfig = siteJson as SiteConfig;
 
 async function apiFetch<T>(path: string): Promise<T | null> {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
     const res = await fetch(`${API_URL}${path}`, {
       next: { revalidate: REVALIDATE },
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
     if (!res.ok) return null;
     const json = await res.json();
     return json.data as T;
