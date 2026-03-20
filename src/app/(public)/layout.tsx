@@ -13,7 +13,7 @@ export default async function PublicLayout({
   return (
     <>
       <Header />
-      <main className="min-h-screen">{children}</main>
+      <main className="relative z-0 min-h-screen">{children}</main>
       <Footer />
       <MusicPlayer playlist={playlist} />
     </>
