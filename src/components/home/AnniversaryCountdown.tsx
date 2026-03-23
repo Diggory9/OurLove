@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getNextAnniversary, calculateCountdown } from "@/lib/utils";
 
 interface AnniversaryCountdownProps {
@@ -8,7 +8,7 @@ interface AnniversaryCountdownProps {
 }
 
 export default function AnniversaryCountdown({ startDate }: AnniversaryCountdownProps) {
-  const nextAnniversary = getNextAnniversary(startDate);
+  const nextAnniversary = useMemo(() => getNextAnniversary(startDate), [startDate]);
   const [countdown, setCountdown] = useState<ReturnType<typeof calculateCountdown> | null>(null);
 
   const start = new Date(startDate);
