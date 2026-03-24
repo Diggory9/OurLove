@@ -11,6 +11,8 @@ export interface IPhoto extends Document {
   featured: boolean;
   width: number;
   height: number;
+  mediaType: "image" | "video";
+  videoUrl: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +29,8 @@ const photoSchema = new Schema<IPhoto>(
     featured: { type: Boolean, default: false },
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
+    mediaType: { type: String, enum: ["image", "video"], default: "image" },
+    videoUrl: { type: String, default: "" },
   },
   {
     timestamps: true,

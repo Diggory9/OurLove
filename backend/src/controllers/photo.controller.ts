@@ -79,7 +79,7 @@ export async function createPhoto(
   next: NextFunction
 ) {
   try {
-    const { albumId, src, thumbnail, alt, caption, dateTaken, order, featured, width, height } =
+    const { albumId, src, thumbnail, alt, caption, dateTaken, order, featured, width, height, mediaType, videoUrl } =
       req.body;
 
     if (!albumId || !src) {
@@ -102,6 +102,8 @@ export async function createPhoto(
       featured: featured || false,
       width: width || 0,
       height: height || 0,
+      mediaType: mediaType || "image",
+      videoUrl: videoUrl || "",
     });
 
     // Update photo count

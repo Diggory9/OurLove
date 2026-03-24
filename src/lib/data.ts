@@ -1,4 +1,4 @@
-import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult, Place } from "@/types";
+import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult, Place, QuizQuestion, DateIdea } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 const REVALIDATE = 60;
@@ -115,6 +115,25 @@ export async function getUpcomingSpecialDays(): Promise<SpecialDay[]> {
 export async function getAllPlaces(): Promise<Place[]> {
   const data = await apiFetch<Place[]>("/api/places");
   return data || [];
+}
+
+// --- Quiz ---
+
+export async function getAllQuizzes(): Promise<QuizQuestion[]> {
+  const data = await apiFetch<QuizQuestion[]>("/api/quiz");
+  return data || [];
+}
+
+// --- Date Ideas ---
+
+export async function getAllDateIdeas(): Promise<DateIdea[]> {
+  const data = await apiFetch<DateIdea[]>("/api/date-ideas");
+  return data || [];
+}
+
+export async function getRandomDateIdea(): Promise<DateIdea | null> {
+  const data = await apiFetch<DateIdea>("/api/date-ideas/random");
+  return data || null;
 }
 
 // --- Search ---

@@ -14,6 +14,8 @@ const navItems = [
   { href: "/admin/special-days", label: "Ngày đặc biệt", icon: "&#127881;" },
   { href: "/admin/music", label: "Music", icon: "&#127925;" },
   { href: "/admin/places", label: "Bản đồ", icon: "&#128205;" },
+  { href: "/admin/quiz", label: "Quiz", icon: "&#10067;" },
+  { href: "/admin/date-ideas", label: "Ý tưởng hẹn hò", icon: "&#128149;" },
   { href: "/admin/settings", label: "Settings", icon: "&#9881;" },
 ];
 

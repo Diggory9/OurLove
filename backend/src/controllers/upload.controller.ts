@@ -86,6 +86,33 @@ export async function uploadMultiple(
   }
 }
 
+export async function uploadVideoFile(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    if (!req.file) {
+      throw new AppError("Vui lòng chọn video để upload", 400);
+    }
+
+    const result = await uploadToCloudinary(req.file.buffer, "videos", "video");
+
+    res.status(201).json({
+      success: true,
+      data: {
+        url: result.url,
+        public_id: result.public_id,
+        originalname: req.file.originalname,
+        size: req.file.size,
+        mimetype: req.file.mimetype,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function uploadAudioFile(
   req: Request,
   res: Response,

@@ -92,19 +92,29 @@ export default function PhotoLightbox({
         </svg>
       </button>
 
-      {/* Image */}
+      {/* Image or Video */}
       <div
         className="relative max-w-[90vw] max-h-[85vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        <Image
-          src={photo.src}
-          alt={photo.alt || ""}
-          width={photo.width || 1200}
-          height={photo.height || 800}
-          className="max-h-[85vh] w-auto object-contain"
-          priority
-        />
+        {photo.mediaType === "video" && photo.videoUrl ? (
+          <video
+            src={photo.videoUrl}
+            poster={photo.src}
+            controls
+            autoPlay
+            className="max-h-[85vh] w-auto object-contain"
+          />
+        ) : (
+          <Image
+            src={photo.src}
+            alt={photo.alt || ""}
+            width={photo.width || 1200}
+            height={photo.height || 800}
+            className="max-h-[85vh] w-auto object-contain"
+            priority
+          />
+        )}
         {photo.caption && (
           <p className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm p-3 text-center">
             {photo.caption}

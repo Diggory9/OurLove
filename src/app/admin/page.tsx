@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchAlbums, fetchPhotos, fetchTimelineEvents, fetchMusic, fetchLoveLetters, fetchBucketItems, fetchSpecialDays } from "@/lib/admin-api";
+import { fetchAlbums, fetchPhotos, fetchTimelineEvents, fetchMusic, fetchLoveLetters, fetchBucketItems, fetchSpecialDays, fetchQuizzes, fetchDateIdeas } from "@/lib/admin-api";
 import Link from "next/link";
 
 interface Stats {
@@ -12,16 +12,18 @@ interface Stats {
   letters: number;
   bucketItems: number;
   specialDays: number;
+  quizzes: number;
+  dateIdeas: number;
 }
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats>({ albums: 0, photos: 0, events: 0, music: 0, letters: 0, bucketItems: 0, specialDays: 0 });
+  const [stats, setStats] = useState<Stats>({ albums: 0, photos: 0, events: 0, music: 0, letters: 0, bucketItems: 0, specialDays: 0, quizzes: 0, dateIdeas: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const [albums, photos, events, music, letters, bucketItems, specialDays] = await Promise.all([
+        const [albums, photos, events, music, letters, bucketItems, specialDays, quizzes, dateIdeas] = await Promise.all([
           fetchAlbums(),
           fetchPhotos(),
           fetchTimelineEvents(),
@@ -29,6 +31,8 @@ export default function AdminDashboard() {
           fetchLoveLetters().catch(() => []),
           fetchBucketItems().catch(() => []),
           fetchSpecialDays().catch(() => []),
+          fetchQuizzes().catch(() => []),
+          fetchDateIdeas().catch(() => []),
         ]);
         setStats({
           albums: (albums as unknown[]).length,
@@ -38,6 +42,8 @@ export default function AdminDashboard() {
           letters: (letters as unknown[]).length,
           bucketItems: (bucketItems as unknown[]).length,
           specialDays: (specialDays as unknown[]).length,
+          quizzes: (quizzes as unknown[]).length,
+          dateIdeas: (dateIdeas as unknown[]).length,
         });
       } catch {
         // Ignore errors
@@ -56,6 +62,8 @@ export default function AdminDashboard() {
     { label: "Kế hoạch", value: stats.bucketItems, href: "/admin/bucket-list", color: "bg-blue-500" },
     { label: "Ngày đặc biệt", value: stats.specialDays, href: "/admin/special-days", color: "bg-green-500" },
     { label: "Music", value: stats.music, href: "/admin/music", color: "bg-amber-500" },
+    { label: "Quiz", value: stats.quizzes, href: "/admin/quiz", color: "bg-teal-500" },
+    { label: "Hẹn hò", value: stats.dateIdeas, href: "/admin/date-ideas", color: "bg-cyan-500" },
   ];
 
   return (

@@ -20,6 +20,8 @@ import bucketListRoutes from "./routes/bucketList.routes";
 import specialDayRoutes from "./routes/specialDay.routes";
 import searchRoutes from "./routes/search.routes";
 import placeRoutes from "./routes/place.routes";
+import quizRoutes from "./routes/quiz.routes";
+import dateIdeaRoutes from "./routes/dateIdea.routes";
 
 const app = express();
 
@@ -49,6 +51,8 @@ app.use("/api/bucket-list", bucketListRoutes);
 app.use("/api/special-days", specialDayRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/places", placeRoutes);
+app.use("/api/quiz", quizRoutes);
+app.use("/api/date-ideas", dateIdeaRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {

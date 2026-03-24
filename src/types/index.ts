@@ -22,6 +22,8 @@ export interface Photo {
   featured: boolean;
   width: number;
   height: number;
+  mediaType: "image" | "video";
+  videoUrl: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -117,6 +119,30 @@ export interface Place {
   lng: number;
   image: string;
   date: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DateIdea {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  estimatedCost: string;
+  duration: string;
   order: number;
   createdAt: string;
   updatedAt: string;

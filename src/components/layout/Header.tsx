@@ -12,6 +12,9 @@ const navItems = [
   { href: "/ke-hoach", label: "Kế hoạch" },
   { href: "/ngay-dac-biet", label: "Ngày đặc biệt" },
   { href: "/ban-do", label: "Bản đồ" },
+  { href: "/quiz-tinh-yeu", label: "Quiz" },
+  { href: "/thanh-tich", label: "Thành tích" },
+  { href: "/y-tuong-hen-ho", label: "Hẹn hò" },
   { href: "/ve-chung-toi", label: "Về chúng tôi" },
 ];
 
@@ -70,7 +73,7 @@ export default function Header() {
         <div
           className={cn(
             "md:hidden overflow-hidden transition-all duration-300",
-            menuOpen ? "max-h-96 pb-4" : "max-h-0"
+            menuOpen ? "max-h-[600px] pb-4" : "max-h-0"
           )}
         >
           <nav className="flex flex-col gap-3">

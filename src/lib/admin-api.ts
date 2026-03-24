@@ -393,6 +393,84 @@ export async function deletePlace(id: string) {
   return result;
 }
 
+// --- Quiz ---
+
+export async function fetchQuizzes() {
+  const res = await fetch(`${API_URL}/api/quiz`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function createQuiz(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/quiz`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateQuiz(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/quiz/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteQuiz(id: string) {
+  const res = await fetch(`${API_URL}/api/quiz/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+// --- Date Ideas ---
+
+export async function fetchDateIdeas() {
+  const res = await fetch(`${API_URL}/api/date-ideas`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function createDateIdea(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/date-ideas`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateDateIdea(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/date-ideas/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteDateIdea(id: string) {
+  const res = await fetch(`${API_URL}/api/date-ideas/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
 // --- Upload ---
 
 export async function uploadImage(file: File): Promise<{ url: string }> {
@@ -417,6 +495,18 @@ export async function uploadImages(files: File[]): Promise<{ url: string }[]> {
     body: formData,
   });
   return handleResponse<{ url: string }[]>(res);
+}
+
+export async function uploadVideo(file: File): Promise<{ url: string }> {
+  const formData = new FormData();
+  formData.append("video", file);
+
+  const res = await fetch(`${API_URL}/api/upload/video`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${getToken()}` },
+    body: formData,
+  });
+  return handleResponse<{ url: string }>(res);
 }
 
 export async function uploadAudio(file: File): Promise<{ url: string }> {
