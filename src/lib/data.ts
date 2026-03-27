@@ -1,4 +1,4 @@
-import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult, Place, QuizQuestion, DateIdea } from "@/types";
+import type { Album, Photo, TimelineEvent, SiteConfig, Music, LoveLetter, BucketItem, SpecialDay, SearchResult, Place, QuizQuestion, DateIdea, LoveReason, OnThisDayData } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 const REVALIDATE = 60;
@@ -133,6 +133,25 @@ export async function getAllDateIdeas(): Promise<DateIdea[]> {
 
 export async function getRandomDateIdea(): Promise<DateIdea | null> {
   const data = await apiFetch<DateIdea>("/api/date-ideas/random");
+  return data || null;
+}
+
+// --- On This Day ---
+
+export async function getOnThisDay(): Promise<OnThisDayData | null> {
+  const data = await apiFetch<OnThisDayData>("/api/on-this-day");
+  return data || null;
+}
+
+// --- Love Reasons ---
+
+export async function getAllLoveReasons(): Promise<LoveReason[]> {
+  const data = await apiFetch<LoveReason[]>("/api/love-reasons");
+  return data || [];
+}
+
+export async function getRandomLoveReason(): Promise<LoveReason | null> {
+  const data = await apiFetch<LoveReason>("/api/love-reasons/random");
   return data || null;
 }
 

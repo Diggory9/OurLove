@@ -471,6 +471,45 @@ export async function deleteDateIdea(id: string) {
   return result;
 }
 
+// --- Love Reasons ---
+
+export async function fetchLoveReasons() {
+  const res = await fetch(`${API_URL}/api/love-reasons`);
+  return handleResponse<unknown[]>(res);
+}
+
+export async function createLoveReason(data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/love-reasons`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function updateLoveReason(id: string, data: Record<string, unknown>) {
+  const res = await fetch(`${API_URL}/api/love-reasons/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
+export async function deleteLoveReason(id: string) {
+  const res = await fetch(`${API_URL}/api/love-reasons/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  const result = await handleResponse(res);
+  await revalidateFrontend();
+  return result;
+}
+
 // --- Upload ---
 
 export async function uploadImage(file: File): Promise<{ url: string }> {

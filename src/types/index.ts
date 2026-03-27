@@ -148,6 +148,24 @@ export interface DateIdea {
   updatedAt: string;
 }
 
+export interface LoveReason {
+  id: string;
+  content: string;
+  author: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OnThisDayData {
+  date: { month: number; day: number };
+  photos: Photo[];
+  events: TimelineEvent[];
+  letters: LoveLetter[];
+  bucketItems: BucketItem[];
+  hasMemories: boolean;
+}
+
 export interface SearchResult {
   albums: Album[];
   photos: Photo[];

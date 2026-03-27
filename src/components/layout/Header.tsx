@@ -15,6 +15,7 @@ const navItems = [
   { href: "/quiz-tinh-yeu", label: "Quiz" },
   { href: "/thanh-tich", label: "Thành tích" },
   { href: "/y-tuong-hen-ho", label: "Hẹn hò" },
+  { href: "/ly-do-yeu", label: "Yêu em" },
   { href: "/ve-chung-toi", label: "Về chúng tôi" },
 ];
 

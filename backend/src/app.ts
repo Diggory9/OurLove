@@ -22,6 +22,8 @@ import searchRoutes from "./routes/search.routes";
 import placeRoutes from "./routes/place.routes";
 import quizRoutes from "./routes/quiz.routes";
 import dateIdeaRoutes from "./routes/dateIdea.routes";
+import onThisDayRoutes from "./routes/onThisDay.routes";
+import loveReasonRoutes from "./routes/loveReason.routes";
 
 const app = express();
 
@@ -53,6 +55,8 @@ app.use("/api/search", searchRoutes);
 app.use("/api/places", placeRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/date-ideas", dateIdeaRoutes);
+app.use("/api/on-this-day", onThisDayRoutes);
+app.use("/api/love-reasons", loveReasonRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {

@@ -16,6 +16,7 @@ const navItems = [
   { href: "/admin/places", label: "Bản đồ", icon: "&#128205;" },
   { href: "/admin/quiz", label: "Quiz", icon: "&#10067;" },
   { href: "/admin/date-ideas", label: "Ý tưởng hẹn hò", icon: "&#128149;" },
+  { href: "/admin/love-reasons", label: "Lý do yêu em", icon: "&#128151;" },
   { href: "/admin/settings", label: "Settings", icon: "&#9881;" },
 ];
 
